@@ -10,5 +10,6 @@
     <string name="button_sad_descr">sad face</string>
     <string name="button_angry_descr">angry face</string>
     <string name="button_neutral_descr">sad face</string>
+    <string name="last_update_label">Last update:</string>
 
 </resources>

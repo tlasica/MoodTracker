@@ -28,15 +28,19 @@
 		    android:id="@+id/button_happy"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:padding="20dp"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordHappy"
 		    android:src="@drawable/face_happy"
 		    android:contentDescription="@string/button_happy_descr"/>
 
 		<ImageButton
 		    android:id="@+id/button_neutral"
 		    android:layout_width="wrap_content"
+		    android:layout_margin="10dp"
 		    android:layout_height="wrap_content"
-		    android:padding="20dp"
+		    android:padding="10dp"
+		    android:onClick="recordNeutral"
 		    android:src="@drawable/face_neutral"
 		    android:contentDescription="@string/button_neutral_descr"/>
 
@@ -54,7 +58,9 @@
 		    android:id="@+id/button_sad"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:padding="20dp"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordSad"
 		    android:src="@drawable/face_sad" 
 		    android:contentDescription="@string/button_sad_descr"/>
 
@@ -63,12 +69,32 @@
 		    android:id="@+id/button_angry"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:padding="20dp"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordAngry"
 		    android:src="@drawable/face_angry" 		     
 		    android:contentDescription="@string/button_angry_descr"/>
 									    
     </LinearLayout>
+    
+    <TextView        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/last_update_label" />
+		
+    <TextView
+        android:id="@+id/last_status"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/last_message"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
 	 <!--android:background="@android:color/transparent"--> 
 	
 </LinearLayout>

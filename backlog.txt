@@ -1,0 +1,10 @@
++	main view with clickable face buttons
+-	save mood into the database
+-	show stats and list view in the menu or on the screen
+-	show statistics from 2 weeks
+-	show statistics with time control (2 weeks, 4 weeks, etc.)
+-	show list from 2 weeks
+-	show statistics with time control (2 weeks, 4 weeks, etc.)
+-	add gps information if on
+-	show chart
+
