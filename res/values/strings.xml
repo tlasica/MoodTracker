@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mood blog</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="what_is_your_mood">What is your mood? Choose emoticon.</string>
+    <string name="edit_message_hint">Edit description.</string>
+    <string name="button_happy_descr">happy face</string>
+    <string name="button_sad_descr">sad face</string>
+    <string name="button_angry_descr">angry face</string>
+    <string name="button_neutral_descr">sad face</string>
+
+</resources>

@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/what_is_your_mood" />
+    
+    <EditText android:id="@+id/edit_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/edit_message_hint" />
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="center"
+    	tools:context=".MainActivity" >
+
+		<ImageButton		    
+		    android:id="@+id/button_happy"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="20dp"
+		    android:src="@drawable/face_happy"
+		    android:contentDescription="@string/button_happy_descr"/>
+
+		<ImageButton
+		    android:id="@+id/button_neutral"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="20dp"
+		    android:src="@drawable/face_neutral"
+		    android:contentDescription="@string/button_neutral_descr"/>
+
+    </LinearLayout>
+				
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="center"
+    	tools:context=".MainActivity" >
+		
+		<ImageButton
+		    android:id="@+id/button_sad"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="20dp"
+		    android:src="@drawable/face_sad" 
+		    android:contentDescription="@string/button_sad_descr"/>
+
+
+		<ImageButton
+		    android:id="@+id/button_angry"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="20dp"
+		    android:src="@drawable/face_angry" 		     
+		    android:contentDescription="@string/button_angry_descr"/>
+									    
+    </LinearLayout>
+
+	 <!--android:background="@android:color/transparent"--> 
+	
+</LinearLayout>
