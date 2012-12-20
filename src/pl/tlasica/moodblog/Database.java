@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * @author tomek
  *
  */
-public class DatabaseContract {
+public class Database {
 
 	public static abstract class Entry implements BaseColumns {
 		
@@ -22,19 +22,20 @@ public class DatabaseContract {
 	private static final String TEXT_TYPE = " TEXT";
 	private static final String DATE_TYPE = " INTEGER";	// for sqlite
 	private static final String COMMA_SEP = ",";
+	private static final String NOT_NULL = " NOT NULL";
 	
 	static final String SQL_CREATE_ENTRIES =
 	    "CREATE TABLE " + Entry.TABLE_NAME + " (" +
 	    Entry._ID + " INTEGER PRIMARY KEY," +
-	    Entry.COLUMN_NAME_MOOD + TEXT_TYPE + COMMA_SEP +
-	    Entry.COLUMN_NAME_TSTAMP + DATE_TYPE + COMMA_SEP +
+	    Entry.COLUMN_NAME_MOOD + TEXT_TYPE + NOT_NULL + COMMA_SEP +
+	    Entry.COLUMN_NAME_TSTAMP + DATE_TYPE + NOT_NULL + COMMA_SEP +
 	    Entry.COLUMN_NAME_MESSAGE + TEXT_TYPE + COMMA_SEP +
-	    Entry.COLUMN_NAME_EXTRA + TEXT_TYPE + COMMA_SEP +
+	    Entry.COLUMN_NAME_EXTRA + TEXT_TYPE +
 	    " )";
 
 	static final String SQL_DELETE_ENTRIES =
 	    "DROP TABLE IF EXISTS " + Entry.TABLE_NAME;	
 	
-	private DatabaseContract() {}
+	private Database() {}
 	
 }
