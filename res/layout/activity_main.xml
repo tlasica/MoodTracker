@@ -5,68 +5,44 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="left"
+    	tools:context=".MainActivity" >
+
+		<ImageView
+		    android:id="@+id/button_stats"
+		    android:layout_width="50dip"
+		    android:layout_height="50dip"
+		    android:layout_alignParentLeft="true"
+		    android:layout_margin="5dp"
+		    android:padding="5dp"
+		    android:onClick="showStatistics"
+		    android:src="@drawable/pie_chart_mono"
+		    android:contentDescription="@string/button_stats_descr"/>
+		
+		<TextView
+		    android:id="@+id/buttono_stats_text"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_margin="0dp"
+        	android:layout_toRightOf="@id/button_stats"
+        	android:text="statistics" 
+        	/>
+		
+		    
+		</RelativeLayout>
+		
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/what_is_your_mood" />
     
-    <EditText android:id="@+id/edit_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_message_hint" />
-<!-- 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	xmlns:tools="http://schemas.android.com/tools"
-    	android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:useDefaultMargins="true"
-    	android:columnCount="2" >
-
-		<ImageButton		    
-		    android:id="@+id/button_happy"
-		    android:gravity="center"
-		    android:layout_width="wrap_content"
-		    android:layout_margin="10dp"
-		    android:padding="10dp"
-		    android:scaleType="centerCrop"
-		    android:onClick="recordHappy"
-		    android:src="@drawable/face_happy"
-		    android:contentDescription="@string/button_happy_descr"/>
-
-		<ImageButton
-		    android:id="@+id/button_neutral"
-		    android:layout_width="wrap_content"
-		    android:layout_margin="10dp"
-		    android:padding="10dp"
-		    android:scaleType="centerCrop"
-		    android:onClick="recordNeutral"
-		    android:src="@drawable/face_neutral"
-		    android:contentDescription="@string/button_neutral_descr"/>
-
-		<ImageButton
-		    android:id="@+id/button_sad"
-		    android:layout_width="wrap_content"
-		    android:layout_margin="10dp"
-		    android:padding="10dp"
-		    android:scaleType="centerCrop"
-		    android:onClick="recordSad"
-		    android:src="@drawable/face_sad" 
-		    android:contentDescription="@string/button_sad_descr"/>
-
-
-		<ImageButton
-		    android:id="@+id/button_angry"
-		    android:layout_width="wrap_content"
-		    android:layout_margin="10dp"
-		    android:scaleType="centerCrop"
-		    android:padding="10dp"
-		    android:onClick="recordAngry"
-		    android:src="@drawable/face_angry" 		     
-		    android:contentDescription="@string/button_angry_descr"/>
-		
-    </GridLayout>
--->
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	xmlns:tools="http://schemas.android.com/tools"
     	android:layout_width="match_parent"

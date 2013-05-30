@@ -16,10 +16,8 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
-	TextView			lastUpdateLabel;
-	TextView			lastStatus;
-	TextView			lastMessage;	
-	EditText			messageEditBox;
+	TextView			lastRecordedMood;
+	TextView			lastRecordedMessage;
 	DatabaseHelper		dbHelper;
 		
 	@Override
@@ -29,7 +27,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		initializeLayoutAttributes();	
 		dbHelper = new DatabaseHelper(this);
-		updateNumberOfRecords();
 		loadLastEntryAndUpdateView();
 	}
 
@@ -40,10 +37,8 @@ public class MainActivity extends Activity {
 	}
 	
 	private void initializeLayoutAttributes() {
-		lastUpdateLabel = (TextView) findViewById(R.id.last_update_label);
-		lastStatus = (TextView) findViewById(R.id.last_status);
-		lastMessage = (TextView) findViewById(R.id.last_message);
-		messageEditBox = (EditText) findViewById(R.id.edit_message);		
+		lastRecordedMood = (TextView) findViewById(R.id.last_status);
+		lastRecordedMessage = (TextView) findViewById(R.id.last_message);
 	}
 	
 	private void loadLastEntryAndUpdateView() {
@@ -53,12 +48,6 @@ public class MainActivity extends Activity {
 		}		
 	}
 
-	private void updateNumberOfRecords() {
-		long rows = dbHelper.getNumEntries();
-		String str = String.format("Last recorded mood (%d recorded):", rows );
-		lastUpdateLabel.setText( str );
-		lastUpdateLabel.invalidate();		
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,28 +72,33 @@ public class MainActivity extends Activity {
 		recordMood(view, Mood.ANGRY);		
 	}
 	
+	public void showStatistics(View view) {
+		///
+	}
+	
 	//TODO: obsługa błędów?
+	//TODO: start new activity !!!
 	private void recordMood(View view, Mood mood) {
+		/*
 		String message = messageEditBox.getText().toString();
 		MoodEntry entry = MoodEntry.createNow(mood, message);
 		dbHelper.saveEntry( entry );
 		updateLastView( entry );
-		messageEditBox.setText("");
-		updateNumberOfRecords();
+		*/
 	}
 
 	private void updateLastView(MoodEntry entry) {
 		String dtStr = getTimestampString( entry.tstamp );
 		String statusStr = String.format("%s on %s", entry.mood, dtStr);
-		lastStatus.setText( statusStr );
-		lastMessage.setText( (entry.message!=null) ? entry.message : "" );
+		lastRecordedMood.setText( statusStr );
+		lastRecordedMessage.setText( (entry.message!=null) ? entry.message : "" );
 		changeLastStatusColors(entry.mood);
 	}
 	
 	private void changeLastStatusColors(Mood mood) {
 		int color = Color.parseColor( mood.colorRGB() );
-		lastStatus.setTextColor(color);
-		lastStatus.invalidate();
+		lastRecordedMood.setTextColor(color);
+		lastRecordedMood.invalidate();
 	}
 
 	//TODO: create separate class

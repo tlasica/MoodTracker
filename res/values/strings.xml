@@ -4,12 +4,16 @@
     <string name="app_name">Mood Tracker</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_stats">Statistics</string>
-    <string name="what_is_your_mood">Choose emoticon to record your mood</string>
-    <string name="edit_message_hint">Add some description here...</string>
+    <string name="what_is_your_mood">Choose emoticon to record your mood:</string>
+    <string name="edit_message_hint">Add some description here</string>
     <string name="button_happy_descr">happy face</string>
     <string name="button_sad_descr">sad face</string>
     <string name="button_angry_descr">angry face</string>
     <string name="button_neutral_descr">sad face</string>
     <string name="last_update_label">Last update:</string>
+    <string name="menu_settings">Settings</string>
+    
+    <string name="title_activity_confirm_save">ConfirmSaveActivity</string>
+    <string name="button_stats_descr">Statistics</string>
 
 </resources>
