@@ -15,21 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/edit_message_hint" />
-
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	xmlns:tools="http://schemas.android.com/tools"
-    	android:layout_width="fill_parent"
+    	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:orientation="horizontal"
-    	android:gravity="center"
-    	tools:context=".MainActivity" >
+    	android:useDefaultMargins="true"
+    	android:columnCount="2" >
 
 		<ImageButton		    
 		    android:id="@+id/button_happy"
+		    android:gravity="center"
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
 		    android:layout_margin="10dp"
 		    android:padding="10dp"
+		    android:scaleType="centerCrop"
 		    android:onClick="recordHappy"
 		    android:src="@drawable/face_happy"
 		    android:contentDescription="@string/button_happy_descr"/>
@@ -38,28 +38,18 @@
 		    android:id="@+id/button_neutral"
 		    android:layout_width="wrap_content"
 		    android:layout_margin="10dp"
-		    android:layout_height="wrap_content"
 		    android:padding="10dp"
+		    android:scaleType="centerCrop"
 		    android:onClick="recordNeutral"
 		    android:src="@drawable/face_neutral"
 		    android:contentDescription="@string/button_neutral_descr"/>
 
-    </LinearLayout>
-				
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	xmlns:tools="http://schemas.android.com/tools"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal"
-    	android:gravity="center"
-    	tools:context=".MainActivity" >
-		
 		<ImageButton
 		    android:id="@+id/button_sad"
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
 		    android:layout_margin="10dp"
 		    android:padding="10dp"
+		    android:scaleType="centerCrop"
 		    android:onClick="recordSad"
 		    android:src="@drawable/face_sad" 
 		    android:contentDescription="@string/button_sad_descr"/>
@@ -68,7 +58,76 @@
 		<ImageButton
 		    android:id="@+id/button_angry"
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
+		    android:layout_margin="10dp"
+		    android:scaleType="centerCrop"
+		    android:padding="10dp"
+		    android:onClick="recordAngry"
+		    android:src="@drawable/face_angry" 		     
+		    android:contentDescription="@string/button_angry_descr"/>
+		
+    </GridLayout>
+-->
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="center"
+    	tools:context=".MainActivity" >
+
+		<ImageView	    
+		    android:id="@+id/button_happy"
+		    android:layout_width="wrap_content"
+		    android:layout_height="130dp"
+		    android:adjustViewBounds="true"
+		    android:layout_weight="1"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordHappy"
+		    android:src="@drawable/face_happy"
+		    android:contentDescription="@string/button_happy_descr"/>
+
+		<ImageView
+		    android:id="@+id/button_neutral"
+		    android:layout_width="wrap_content"
+		    android:layout_height="130dp"
+		    android:adjustViewBounds="true"
+			android:layout_weight="1"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordNeutral"
+		    android:src="@drawable/face_neutral"
+		    android:contentDescription="@string/button_neutral_descr"/>
+
+    </LinearLayout>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:gravity="center"
+    	tools:context=".MainActivity" >
+		
+		<ImageView
+		    android:id="@+id/button_sad"
+		    android:layout_width="wrap_content"
+		    android:layout_height="130dp"
+		    android:adjustViewBounds="true"
+			android:layout_weight="1"
+		    android:layout_margin="10dp"
+		    android:padding="10dp"
+		    android:onClick="recordSad"
+		    android:src="@drawable/face_sad" 
+		    android:contentDescription="@string/button_sad_descr"/>
+
+
+		<ImageView
+		    android:id="@+id/button_angry"
+		    android:layout_width="wrap_content"
+		    android:layout_height="130dp"
+		    android:adjustViewBounds="true"
+			android:layout_weight="1"
 		    android:layout_margin="10dp"
 		    android:padding="10dp"
 		    android:onClick="recordAngry"
