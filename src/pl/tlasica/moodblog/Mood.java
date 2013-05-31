@@ -1,5 +1,6 @@
 package pl.tlasica.moodblog;
 
+
 //TODO: colory można zapisać w resource
 //http://stackoverflow.com/questions/3668958/how-to-set-color-for-the-textview-in-android
 public enum Mood {

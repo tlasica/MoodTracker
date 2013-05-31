@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="11"
         android:targetSdkVersion="16" />
 
     <application
@@ -16,17 +16,21 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="pl.tlasica.moodblog.MainActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN" />                
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>            
         </activity>
         <activity
             android:name="pl.tlasica.moodblog.ConfirmSaveActivity"
-            android:label="@string/title_activity_confirm_save" >
+            android:label="@string/title_activity_confirm_save"
+            android:exported="false"
+            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.tlasica.moodblog.MainActivity" />            
         </activity>
     </application>
 

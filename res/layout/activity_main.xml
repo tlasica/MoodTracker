@@ -4,38 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
-
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	xmlns:tools="http://schemas.android.com/tools"
-    	android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal"
-    	android:gravity="left"
-    	tools:context=".MainActivity" >
-
-		<ImageView
-		    android:id="@+id/button_stats"
-		    android:layout_width="50dip"
-		    android:layout_height="50dip"
-		    android:layout_alignParentLeft="true"
-		    android:layout_margin="5dp"
-		    android:padding="5dp"
-		    android:onClick="showStatistics"
-		    android:src="@drawable/pie_chart_mono"
-		    android:contentDescription="@string/button_stats_descr"/>
-		
-		<TextView
-		    android:id="@+id/buttono_stats_text"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_margin="0dp"
-        	android:layout_toRightOf="@id/button_stats"
-        	android:text="statistics" 
-        	/>
-		
-		    
-		</RelativeLayout>
-		
     
     <TextView
         android:layout_width="wrap_content"
@@ -51,30 +19,30 @@
     	android:gravity="center"
     	tools:context=".MainActivity" >
 
-		<ImageView	    
-		    android:id="@+id/button_happy"
-		    android:layout_width="wrap_content"
-		    android:layout_height="130dp"
-		    android:adjustViewBounds="true"
-		    android:layout_weight="1"
-		    android:layout_margin="10dp"
-		    android:padding="10dp"
-		    android:onClick="recordHappy"
-		    android:src="@drawable/face_happy"
-		    android:contentDescription="@string/button_happy_descr"/>
+		<ImageButton 
+			    android:id="@+id/button_happy"
+			    android:layout_width="0dip"
+			    android:layout_height="130dp"
+			    android:adjustViewBounds="true"
+			    android:layout_weight="1"
+			    android:layout_margin="10dp"
+			    android:padding="10dp"
+			    android:onClick="recordHappy"
+			    android:src="@drawable/face_happy"
+			    android:contentDescription="@string/button_happy_descr"/>
 
-		<ImageView
-		    android:id="@+id/button_neutral"
-		    android:layout_width="wrap_content"
-		    android:layout_height="130dp"
-		    android:adjustViewBounds="true"
-			android:layout_weight="1"
-		    android:layout_margin="10dp"
-		    android:padding="10dp"
-		    android:onClick="recordNeutral"
-		    android:src="@drawable/face_neutral"
-		    android:contentDescription="@string/button_neutral_descr"/>
-
+		<ImageButton
+			    android:id="@+id/button_neutral"
+			    android:layout_width="0dip"
+			    android:layout_height="130dp"
+			    android:adjustViewBounds="true"
+				android:layout_weight="1"
+			    android:layout_margin="10dp"
+			    android:padding="10dp"
+			    android:onClick="recordNeutral"
+			    android:src="@drawable/face_neutral"
+			    android:contentDescription="@string/button_neutral_descr"/>
+			
     </LinearLayout>
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -85,9 +53,9 @@
     	android:gravity="center"
     	tools:context=".MainActivity" >
 		
-		<ImageView
+		<ImageButton
 		    android:id="@+id/button_sad"
-		    android:layout_width="wrap_content"
+		    android:layout_width="0dip"
 		    android:layout_height="130dp"
 		    android:adjustViewBounds="true"
 			android:layout_weight="1"
@@ -98,9 +66,9 @@
 		    android:contentDescription="@string/button_sad_descr"/>
 
 
-		<ImageView
+		<ImageButton
 		    android:id="@+id/button_angry"
-		    android:layout_width="wrap_content"
+		    android:layout_width="0dip"
 		    android:layout_height="130dp"
 		    android:adjustViewBounds="true"
 			android:layout_weight="1"

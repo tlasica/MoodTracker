@@ -3,6 +3,7 @@ package pl.tlasica.moodblog;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,14 +27,19 @@ public class MainActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_main);
 		initializeLayoutAttributes();	
-		dbHelper = new DatabaseHelper(this);
-		loadLastEntryAndUpdateView();
+		dbHelper = DatabaseHelper.create(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		dbHelper.close();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		loadLastEntryAndUpdateView();		
 	}
 	
 	private void initializeLayoutAttributes() {
@@ -79,12 +85,9 @@ public class MainActivity extends Activity {
 	//TODO: obsługa błędów?
 	//TODO: start new activity !!!
 	private void recordMood(View view, Mood mood) {
-		/*
-		String message = messageEditBox.getText().toString();
-		MoodEntry entry = MoodEntry.createNow(mood, message);
-		dbHelper.saveEntry( entry );
-		updateLastView( entry );
-		*/
+		Intent intent = new Intent(this, ConfirmSaveActivity.class);
+		intent.putExtra(ConfirmSaveActivity.PARAM_MOOD_STR, mood.toString());
+		startActivity(intent);
 	}
 
 	private void updateLastView(MoodEntry entry) {

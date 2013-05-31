@@ -6,21 +6,35 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // If you change the database schema, you must increment the database version.
+	// If you change the database schema, you must increment the database version.
     public static final int 		DATABASE_VERSION = 1;
     public static final String 	DATABASE_NAME = "MoodTracker.db";
 
+    public static DatabaseHelper	singleton;
+    
     private static final String[] columns = {
 		Database.Entry.COLUMN_NAME_TSTAMP,
 		Database.Entry.COLUMN_NAME_MOOD,
 		Database.Entry.COLUMN_NAME_MESSAGE
     };
     
-    public DatabaseHelper(Context context) {
+    public static DatabaseHelper create(Context context) {
+    	if (singleton == null) {
+    		singleton = new DatabaseHelper( context ); 
+    	}
+    	return singleton;
+    }
+    
+    public static DatabaseHelper getInstance() {
+    	return singleton;
+    }
+    
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public void onCreate(SQLiteDatabase db) {
@@ -59,15 +73,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	String[] projection = columns;
     	String sort = tstampDescSortOrder;
     	String limit = "1";
-    	Cursor c = db.query(false,	Database.Entry.TABLE_NAME, projection, null, null, null, null, sort, limit);
+    	Cursor cur = db.query(false,	Database.Entry.TABLE_NAME, projection, null, null, null, null, sort, limit);
     	MoodEntry res = null;
-    	if (c.moveToFirst()) {
-    		int dt = c.getInt( 0 );
-    		String mood = c.getString( 1 );
-    		String message = c.getString( 2 );
+    	if (cur.moveToFirst()) {
+    		long dt = cur.getLong( 0 );
+    		String mood = cur.getString( 1 );
+    		String message = cur.getString( 2 );
     		res = MoodEntry.create(mood, dt, message);
     	}
-    	c.close();
+    	cur.close();
     	return res;
     }
     

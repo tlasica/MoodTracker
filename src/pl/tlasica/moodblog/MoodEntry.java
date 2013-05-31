@@ -8,11 +8,11 @@ public class MoodEntry {
 	String 			message;
 	Date			tstamp;
 	
-	public static MoodEntry create(String moodStr, int tstampMillis, String message) {
+	public static MoodEntry create(String moodStr, long dt, String message) {
 		MoodEntry e = new MoodEntry();
 		e.mood = Mood.fromString(moodStr);
 		e.tstamp = new Date();
-		e.tstamp.setTime( tstampMillis );
+		e.tstamp.setTime( dt );
 		e.message = message;
 		return e;
 	}
