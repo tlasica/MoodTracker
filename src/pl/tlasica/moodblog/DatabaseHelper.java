@@ -1,7 +1,10 @@
 package pl.tlasica.moodblog;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -93,25 +96,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	return cur;
     }
     
-    public List<MoodEntry> getEntriesFromLastDays(int numdays) {
+    //TODO: uwzględnić filtr po numDays
+    public Map<Mood, Long> fetchStatistics(int numDays) {
+    	Map<Mood,Long> res = new HashMap<Mood,Long>();
+
     	SQLiteDatabase db = getReadableDatabase();
-    	String[] projection = columns;
-    	String sort = tstampDescSortOrder;
-    	String limit = null;
-    	String selection = null;	//TODO: zmienić!!!
-    	Cursor cur = db.query(Database.Entry.TABLE_NAME, projection, selection, null, null, null, sort, limit);
+    	Cursor cur = db.rawQuery("select mood, count(1) from entry group by mood", null); 
+
+    	cur.moveToFirst();
+    	do {
+    		String mood = cur.getString( 0 );
+    		Long count = cur.getLong( 1 );
+    		res.put(Mood.fromString(mood), count);
+    	} while( cur.moveToNext() );
     	
-    	List<MoodEntry> res = new ArrayList<MoodEntry>();
-    	
-    	while( cur.moveToNext() ) {
-    		MoodEntry entry = cursorToEntry( cur );
-    		res.add( entry );
-    	}    	
-    	
-    	cur.close();
     	return res;
-    	
     }
+    
         
     public MoodEntry cursorToEntry(Cursor cur) {
 		long dt = cur.getLong( 0 );
