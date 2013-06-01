@@ -9,8 +9,35 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/stats_welcome" />
 
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+   		android:orientation="horizontal"
+   		android:layout_marginTop="5dp"
+   		android:layout_marginBottom="5dp"
+    	tools:context=".StatisticsActivity" >
+        
+		<SeekBar android:id="@+id/seekbar_numweeks"
+        	android:layout_weight="80"
+		    android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:max="26"
+		/>
+
+    	<TextView android:id="@+id/text_numweeks"
+        	android:layout_weight="20"
+		    android:layout_width="0dp"
+        	android:layout_height="match_parent"
+        	android:gravity="center"
+        	android:layout_marginRight="5dp"
+			android:textSize="20sp"        	
+        />
+						
+	</LinearLayout>    
+	
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/layout_piechart"
     	android:orientation="horizontal"

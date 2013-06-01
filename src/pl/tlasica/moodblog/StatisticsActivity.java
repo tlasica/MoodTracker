@@ -16,12 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 public class StatisticsActivity extends Activity {
 
 	private CategorySeries	mSeries = new CategorySeries("");
 	private DefaultRenderer mRenderer = new DefaultRenderer();	
 	private GraphicalView mChartView;
+	
+	private TextView		mTextNumWeeks;
 	
 	
 	 @Override
@@ -43,17 +48,46 @@ public class StatisticsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_statistics);
 		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		setupRenderer();
-		prepareDataSeries(30);
+		
+		mTextNumWeeks = (TextView) findViewById(R.id.text_numweeks);
+		
+		SeekBar seekbar = (SeekBar) findViewById(R.id.seekbar_numweeks);	        
+		seekbar.setOnSeekBarChangeListener( 
+				new OnSeekBarChangeListener() {
+						public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+							//empty
+						}
+							
+						public void onStartTrackingTouch(SeekBar seekBar)	{
+							// empty
+						}
+
+						public void onStopTrackingTouch(SeekBar seekBar) {
+							int numWeeks = seekBar.getProgress();							
+							mTextNumWeeks.setText( String.valueOf(numWeeks));
+							prepareDataSeries( numWeeks );
+
+						}
+					});
+		
+		int startWithTwoWeeks = 2;
+		seekbar.setProgress( startWithTwoWeeks );
+		prepareDataSeries( startWithTwoWeeks );
+		mTextNumWeeks.setText( String.valueOf(startWithTwoWeeks) );
 	}
 
-	private void prepareDataSeries(int numDays) {
+	private void prepareDataSeries(int numWeeks) {
 		DatabaseHelper db = DatabaseHelper.getInstance();
+		int numDays = numWeeks * 7;
 		Map<Mood,Long> stats = db.fetchStatistics(numDays);
 		
+		mSeries.clear();
 		for(Mood m: Mood.values()) {
-			mSeries.add(m.toString(), stats.get(m));
+			Long count = stats.get(m);
+			mSeries.add(m.toString(), count );
 		}
 	}
 
@@ -110,8 +144,8 @@ public class StatisticsActivity extends Activity {
 		}
 		mRenderer.setDisplayValues( true );
 		mRenderer.setAntialiasing( true );
-		mRenderer.setStartAngle( 180 );
 		mRenderer.setLabelsTextSize(22);
+		mRenderer.setLabelsColor( Color.LTGRAY );
 		mRenderer.setLegendTextSize(20);
 		mRenderer.setMargins( new int[]{0,0,0,0} );
 	}	

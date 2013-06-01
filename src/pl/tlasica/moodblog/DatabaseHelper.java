@@ -1,9 +1,8 @@
 package pl.tlasica.moodblog;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -96,19 +95,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	return cur;
     }
     
-    //TODO: uwzględnić filtr po numDays
     public Map<Mood, Long> fetchStatistics(int numDays) {
     	Map<Mood,Long> res = new HashMap<Mood,Long>();
 
+    	Calendar cal = GregorianCalendar.getInstance();
+    	cal.add( Calendar.DAY_OF_YEAR, -numDays);
+    	long fromDateMillis = cal.getTimeInMillis();
+    	
     	SQLiteDatabase db = getReadableDatabase();
-    	Cursor cur = db.rawQuery("select mood, count(1) from entry group by mood", null); 
+    	Cursor cur = db.rawQuery("select mood, count(1) from entry where tstamp>? group by mood", new String[]{String.valueOf(fromDateMillis)}); 
 
-    	cur.moveToFirst();
-    	do {
-    		String mood = cur.getString( 0 );
-    		Long count = cur.getLong( 1 );
-    		res.put(Mood.fromString(mood), count);
-    	} while( cur.moveToNext() );
+    	if (cur.moveToFirst() ) {
+	    	do {
+	    		String mood = cur.getString( 0 );
+	    		Long count = cur.getLong( 1 );
+	    		res.put(Mood.fromString(mood), count);
+	    	} while( cur.moveToNext() );
+    	}
     	
     	return res;
     }

@@ -20,5 +20,6 @@
     <string name="confirm_save_text">It is not mandatory, but what about adding some description (e.g. reason or details)?</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_statistics">Statistics</string>
+    <string name="stats_welcome">Select how many weeks should be included</string>
 
 </resources>
