@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
     	android:singleLine="false"
-    	android:lines="5"        
+    	android:lines="3"        
         android:hint="@string/edit_message_hint" />
     
     <Button

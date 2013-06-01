@@ -16,21 +16,38 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="pl.tlasica.moodblog.MainActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation" >
+            android:configChanges="orientation"
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />                
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>            
+            </intent-filter>
         </activity>
         <activity
             android:name="pl.tlasica.moodblog.ConfirmSaveActivity"
-            android:label="@string/title_activity_confirm_save"
             android:exported="false"
+            android:label="@string/title_activity_confirm_save"
             android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.tlasica.moodblog.MainActivity" />            
+                android:value="pl.tlasica.moodblog.MainActivity" />
+        </activity>
+        <activity
+            android:name="pl.tlasica.moodblog.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.tlasica.moodblog.MainActivity" />
+        </activity>
+        <activity
+            android:name="pl.tlasica.moodblog.StatisticsActivity"
+            android:label="@string/title_activity_statistics"
+            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.tlasica.moodblog.MainActivity" />
         </activity>
     </application>
 

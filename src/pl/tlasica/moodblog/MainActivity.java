@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
 	TextView			lastRecordedMood;
 	TextView			lastRecordedMessage;
 	DatabaseHelper		dbHelper;
+	TimeStampFormatter	dtFormat;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		initializeLayoutAttributes();	
 		dbHelper = DatabaseHelper.create(this);
+		dtFormat = TimeStampFormatter.create( getApplicationContext() );
 	}
 
 	@Override
@@ -35,7 +38,7 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		dbHelper.close();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -54,7 +57,6 @@ public class MainActivity extends Activity {
 		}		
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -62,6 +64,20 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch( item.getItemId() ) {
+			case R.id.menu_history:
+				showHistoryActivity();
+				return true;
+			case R.id.menu_stats:
+				showStatisticsActivity();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
 	public void recordHappy(View view) {
 		recordMood(view, Mood.HAPPY);
 	}
@@ -77,21 +93,25 @@ public class MainActivity extends Activity {
 	public void recordAngry(View view) {
 		recordMood(view, Mood.ANGRY);		
 	}
-	
-	public void showStatistics(View view) {
-		///
-	}
-	
-	//TODO: obsługa błędów?
-	//TODO: start new activity !!!
+		
 	private void recordMood(View view, Mood mood) {
 		Intent intent = new Intent(this, ConfirmSaveActivity.class);
 		intent.putExtra(ConfirmSaveActivity.PARAM_MOOD_STR, mood.toString());
 		startActivity(intent);
 	}
 
+	public void showHistoryActivity() {
+		Intent intent = new Intent(this, HistoryActivity.class);
+		startActivity(intent);
+	}
+	
+	public void showStatisticsActivity() {
+		Intent intent = new Intent(this, StatisticsActivity.class);
+		startActivity(intent);
+	}
+
 	private void updateLastView(MoodEntry entry) {
-		String dtStr = getTimestampString( entry.tstamp );
+		String dtStr = dtFormat.format( entry.tstamp );
 		String statusStr = String.format("%s on %s", entry.mood, dtStr);
 		lastRecordedMood.setText( statusStr );
 		lastRecordedMessage.setText( (entry.message!=null) ? entry.message : "" );
@@ -102,13 +122,6 @@ public class MainActivity extends Activity {
 		int color = Color.parseColor( mood.colorRGB() );
 		lastRecordedMood.setTextColor(color);
 		lastRecordedMood.invalidate();
-	}
-
-	//TODO: create separate class
-	private String getTimestampString(Date dt) {
-		String date = android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(dt);
-		String time = android.text.format.DateFormat.getTimeFormat(getApplicationContext()).format(dt);		
-		return date + " " + time;
 	}
 	
 }

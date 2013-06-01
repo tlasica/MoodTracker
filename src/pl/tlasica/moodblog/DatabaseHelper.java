@@ -1,12 +1,14 @@
 package pl.tlasica.moodblog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -73,16 +75,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	String[] projection = columns;
     	String sort = tstampDescSortOrder;
     	String limit = "1";
-    	Cursor cur = db.query(false,	Database.Entry.TABLE_NAME, projection, null, null, null, null, sort, limit);
+    	Cursor cur = db.query(Database.Entry.TABLE_NAME, projection, null, null, null, null, sort, limit);
     	MoodEntry res = null;
     	if (cur.moveToFirst()) {
-    		long dt = cur.getLong( 0 );
-    		String mood = cur.getString( 1 );
-    		String message = cur.getString( 2 );
-    		res = MoodEntry.create(mood, dt, message);
+    		res = cursorToEntry(cur);
     	}
     	cur.close();
     	return res;
     }
     
+    public Cursor fetchAllEntries() {
+    	SQLiteDatabase db = getReadableDatabase();
+    	Cursor cur = db.rawQuery("select rowid _id, * from entry order by tstamp desc", null);
+    	if (cur != null) {
+    		   cur.moveToFirst();
+    	}
+    	return cur;
+    }
+    
+    public List<MoodEntry> getEntriesFromLastDays(int numdays) {
+    	SQLiteDatabase db = getReadableDatabase();
+    	String[] projection = columns;
+    	String sort = tstampDescSortOrder;
+    	String limit = null;
+    	String selection = null;	//TODO: zmienić!!!
+    	Cursor cur = db.query(Database.Entry.TABLE_NAME, projection, selection, null, null, null, sort, limit);
+    	
+    	List<MoodEntry> res = new ArrayList<MoodEntry>();
+    	
+    	while( cur.moveToNext() ) {
+    		MoodEntry entry = cursorToEntry( cur );
+    		res.add( entry );
+    	}    	
+    	
+    	cur.close();
+    	return res;
+    	
+    }
+        
+    public MoodEntry cursorToEntry(Cursor cur) {
+		long dt = cur.getLong( 0 );
+		String mood = cur.getString( 1 );
+		String message = cur.getString( 2 );
+		return MoodEntry.create(mood, dt, message);    	
+    }
 }
