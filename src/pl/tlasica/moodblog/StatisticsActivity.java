@@ -87,7 +87,7 @@ public class StatisticsActivity extends Activity {
 		mSeries.clear();
 		for(Mood m: Mood.values()) {
 			Long count = stats.get(m);
-			mSeries.add(m.toString(), count );
+			mSeries.add(m.toString(), (count!=null) ? count : 0L );
 		}
 	}
 
