@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 	android:layout_margin="5dp"
     >
-        <TextView android:id="@+id/listitem_tstamp"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="10dp"
-        />
-        <TextView android:id="@+id/listitem_mood"
-            android:layout_height="fill_parent"
-            android:layout_width="wrap_content"
-        />
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	>
+	       	<TextView android:id="@+id/listitem_tstamp"
+	           	android:layout_height="fill_parent"
+	           	android:layout_width="wrap_content"
+	           	android:layout_marginRight="10dp"
+	       	/>
+	       	<TextView android:id="@+id/listitem_mood"
+	           	android:layout_height="fill_parent"
+	           	android:layout_width="wrap_content"
+	       	/>
+	</LinearLayout>
+
+   	<TextView android:id="@+id/listitem_message"
+       	android:layout_height="wrap_content"
+       	android:layout_width="fill_parent"
+		android:layout_marginLeft="10dp"
+   	/>
+		
 </LinearLayout>
+		

@@ -22,8 +22,8 @@ public class HistoryActivity extends Activity {
 		
 		ListView listview = (ListView)findViewById(R.id.history_listview);
 		
-		String[] fromColumns = {Database.Entry.COLUMN_NAME_TSTAMP, Database.Entry.COLUMN_NAME_MOOD};
-		int[] toViews = {R.id.listitem_tstamp, R.id.listitem_mood};
+		String[] fromColumns = {Database.Entry.COLUMN_NAME_TSTAMP, Database.Entry.COLUMN_NAME_MOOD, Database.Entry.COLUMN_NAME_MESSAGE};
+		int[] toViews = {R.id.listitem_tstamp, R.id.listitem_mood, R.id.listitem_message};
 		
 		mCursor = DatabaseHelper.getInstance().fetchAllEntries();
 		
