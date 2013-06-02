@@ -69,7 +69,7 @@ public class StatisticsActivity extends Activity {
 							int numWeeks = seekBar.getProgress();							
 							mTextNumWeeks.setText( String.valueOf(numWeeks));
 							prepareDataSeries( numWeeks );
-
+							mChartView.repaint();
 						}
 					});
 		

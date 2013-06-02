@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -109,9 +110,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    	do {
 	    		String mood = cur.getString( 0 );
 	    		Long count = cur.getLong( 1 );
-	    		res.put(Mood.fromString(mood), count);
+	    		res.put(Mood.fromString(mood), count);	    		
+	    		// Log.d("fetchStatistics()", mood + " => " + String.valueOf(count));	    		
 	    	} while( cur.moveToNext() );
-    	}
+    	}    	    	
     	
     	return res;
     }

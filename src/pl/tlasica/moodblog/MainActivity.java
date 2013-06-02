@@ -1,5 +1,8 @@
 package pl.tlasica.moodblog;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -28,8 +31,12 @@ public class MainActivity extends Activity {
 		initializeLayoutAttributes();	
 		dbHelper = DatabaseHelper.create(this);
 		dtFormat = TimeStampFormatter.create( getApplicationContext() );
+		
+		//for testing only
+		//TestHelper.forTestCreateHistoryOfMood(dbHelper, 42);
 	}
 
+		
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
