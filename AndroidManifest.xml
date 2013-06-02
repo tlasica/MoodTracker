@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.tlasica.moodblog"
+    package="pl.tlasica.moodtracker"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="17" />
 
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -18,7 +18,7 @@
         android:logo="@drawable/ic_launcher"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="pl.tlasica.moodblog.MainActivity"
+            android:name="pl.tlasica.moodtracker.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -28,29 +28,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.tlasica.moodblog.ConfirmSaveActivity"
+            android:name="pl.tlasica.moodtracker.ConfirmSaveActivity"
             android:exported="false"
             android:label="@string/title_activity_confirm_save"
-            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            android:parentActivityName="pl.tlasica.moodtracker.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.tlasica.moodblog.MainActivity" />
+                android:value="pl.tlasica.moodtracker.MainActivity" />
         </activity>
         <activity
-            android:name="pl.tlasica.moodblog.HistoryActivity"
+            android:name="pl.tlasica.moodtracker.HistoryActivity"
             android:label="@string/title_activity_history"
-            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            android:parentActivityName="pl.tlasica.moodtracker.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.tlasica.moodblog.MainActivity" />
+                android:value="pl.tlasica.moodtracker.MainActivity" />
         </activity>
         <activity
-            android:name="pl.tlasica.moodblog.StatisticsActivity"
+            android:name="pl.tlasica.moodtracker.StatisticsActivity"
             android:label="@string/title_activity_statistics"
-            android:parentActivityName="pl.tlasica.moodblog.MainActivity" >
+            android:parentActivityName="pl.tlasica.moodtracker.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.tlasica.moodblog.MainActivity" />
+                android:value="pl.tlasica.moodtracker.MainActivity" />
         </activity>
                 
         <!-- AdMobActivity definition -->

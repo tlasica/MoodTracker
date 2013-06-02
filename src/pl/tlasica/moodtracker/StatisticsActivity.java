@@ -1,4 +1,4 @@
-package pl.tlasica.moodblog;
+package pl.tlasica.moodtracker;
 
 import java.util.Map;
 

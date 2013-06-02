@@ -1,4 +1,4 @@
-package pl.tlasica.moodblog;
+package pl.tlasica.moodtracker;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {

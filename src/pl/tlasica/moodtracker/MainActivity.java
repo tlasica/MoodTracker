@@ -1,7 +1,4 @@
-package pl.tlasica.moodblog;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+package pl.tlasica.moodtracker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-// TODO: warto skorzystać, bo można zrobić automatycznie skalujące się przyciski
-// http://www.androidhive.info/2012/02/android-gridview-layout-tutorial/
 
 public class MainActivity extends Activity {
 	

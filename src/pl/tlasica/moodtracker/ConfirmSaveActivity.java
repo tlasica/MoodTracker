@@ -1,4 +1,4 @@
-package pl.tlasica.moodblog;
+package pl.tlasica.moodtracker;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class ConfirmSaveActivity extends Activity {
 
-	public final static String PARAM_MOOD_STR = "pl.tlasica.moodblog.MOOD";
+	public final static String PARAM_MOOD_STR = "pl.tlasica.moodtracker.MOOD";
 
 	Mood				moodToSave;
 	

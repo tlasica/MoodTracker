@@ -1,4 +1,4 @@
-package pl.tlasica.moodblog;
+package pl.tlasica.moodtracker;
 
 
 //TODO: colory można zapisać w resource
