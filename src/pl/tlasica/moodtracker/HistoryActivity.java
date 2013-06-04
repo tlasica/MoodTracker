@@ -17,7 +17,6 @@ public class HistoryActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		ListView listview = (ListView)findViewById(R.id.history_listview);
 		
