@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 public class StatisticsActivity extends Activity {
 
-	private CategorySeries		mSeries = new CategorySeries("");
-	private DefaultRenderer 	mRenderer = new DefaultRenderer();	
+	private CategorySeries		mSeries;
+	private DefaultRenderer 	mRenderer;	
 	private GraphicalView 		mChartView;
 	
 	private TextView			mTextNumWeeks;
@@ -42,7 +42,7 @@ public class StatisticsActivity extends Activity {
 	    outState.putSerializable("current_series", mSeries);
 	    outState.putSerializable("current_renderer", mRenderer);
 	  }
-	
+			
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,6 +73,7 @@ public class StatisticsActivity extends Activity {
 		
 		int startWithTwoWeeks = 2;
 		seekbar.setProgress( startWithTwoWeeks );
+		mSeries = new CategorySeries("");
 		prepareDataSeries( startWithTwoWeeks );
 		mTextNumWeeks.setText( String.valueOf(startWithTwoWeeks) );
 	}
@@ -131,6 +132,8 @@ public class StatisticsActivity extends Activity {
 
 	private void setupRenderer()
 	{
+		mRenderer = new DefaultRenderer();
+		
 		for(Mood mood: Mood.values()) {
 			int color = Color.parseColor( mood.colorRGB() );
 			SimpleSeriesRenderer simpleRenderer = new SimpleSeriesRenderer();
@@ -140,6 +143,7 @@ public class StatisticsActivity extends Activity {
 			simpleRenderer.setShowLegendItem( true );
 			mRenderer.addSeriesRenderer(simpleRenderer);
 		}
+		
 		mRenderer.setDisplayValues( true );
 		mRenderer.setAntialiasing( true );
 		mRenderer.setLabelsTextSize(22);
