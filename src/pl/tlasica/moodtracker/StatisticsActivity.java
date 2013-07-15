@@ -22,11 +22,11 @@ import android.widget.TextView;
 
 public class StatisticsActivity extends Activity {
 
-	private CategorySeries	mSeries = new CategorySeries("");
-	private DefaultRenderer mRenderer = new DefaultRenderer();	
-	private GraphicalView mChartView;
+	private CategorySeries		mSeries = new CategorySeries("");
+	private DefaultRenderer 	mRenderer = new DefaultRenderer();	
+	private GraphicalView 		mChartView;
 	
-	private TextView		mTextNumWeeks;
+	private TextView			mTextNumWeeks;
 	
 	
 	 @Override
@@ -78,7 +78,7 @@ public class StatisticsActivity extends Activity {
 	}
 
 	private void prepareDataSeries(int numWeeks) {
-		DatabaseHelper db = DatabaseHelper.getInstance();
+		DatabaseHelper db = DatabaseHelper.getInstance( this.getApplicationContext() );
 		int numDays = numWeeks * 7;
 		Map<Mood,Long> stats = db.fetchStatistics(numDays);
 		

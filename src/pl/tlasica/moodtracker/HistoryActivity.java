@@ -22,8 +22,9 @@ public class HistoryActivity extends Activity {
 		
 		String[] fromColumns = {Database.Entry.COLUMN_NAME_TSTAMP, Database.Entry.COLUMN_NAME_MOOD, Database.Entry.COLUMN_NAME_MESSAGE};
 		int[] toViews = {R.id.listitem_tstamp, R.id.listitem_mood, R.id.listitem_message};
-		
-		mCursor = DatabaseHelper.getInstance().fetchAllEntries();
+				
+		DatabaseHelper db = DatabaseHelper.getInstance( this.getApplicationContext() );		
+		mCursor = db.fetchAllEntries();
 		
 		mAdapter = new HistoryListAdapter(this, R.layout.history_list_item, mCursor, fromColumns, toViews, 0);
 		mAdapter.setTimeStampFormatter( TimeStampFormatter.create( getApplicationContext() ));

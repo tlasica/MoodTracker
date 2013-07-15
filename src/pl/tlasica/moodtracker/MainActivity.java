@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_main);
 		initializeLayoutAttributes();	
-		dbHelper = DatabaseHelper.create(this);
+		dbHelper = DatabaseHelper.getInstance(getApplicationContext());
 		dtFormat = TimeStampFormatter.create( getApplicationContext() );
 		
 		//for testing only

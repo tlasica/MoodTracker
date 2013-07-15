@@ -42,7 +42,7 @@ public class ConfirmSaveActivity extends Activity {
 		EditText messageEdit = (EditText) findViewById(R.id.edit_message);
         String message = messageEdit.getText().toString();
         MoodEntry entry = MoodEntry.createNow(moodToSave, message);
-        DatabaseHelper db = DatabaseHelper.getInstance(); 
+        DatabaseHelper db = DatabaseHelper.getInstance( this.getApplicationContext() ); 
         db.saveEntry( entry );
         this.finish();
 	}

@@ -26,15 +26,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Database.Entry.COLUMN_NAME_MOOD,
 		Database.Entry.COLUMN_NAME_MESSAGE
     };
-    
+
+    /*
     public static DatabaseHelper create(Context context) {
     	if (singleton == null) {
     		singleton = new DatabaseHelper( context ); 
     	}
     	return singleton;
     }
+    */
     
-    public static DatabaseHelper getInstance() {
+    public static synchronized DatabaseHelper getInstance(Context context) {
+    	if (singleton == null) {
+    		singleton = new DatabaseHelper( context ); 
+    	}
     	return singleton;
     }
     
