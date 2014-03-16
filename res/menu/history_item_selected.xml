@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_remove_item"
+          android:title="remove item"
+          android:icon="@drawable/ic_action_discard"
+          android:onClick="onMenuRemoveItem"
+          android:showAsAction="ifRoom|withText" />
+    <!--
+    <item android:id="@id/menu_change_descr"
+          android:title="change description..."
+          android:showAsAction="ifRoom|withText" />
+    -->
+</menu>

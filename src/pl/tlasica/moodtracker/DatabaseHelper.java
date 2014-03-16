@@ -1,9 +1,6 @@
 package pl.tlasica.moodtracker;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +8,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -127,6 +125,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		long dt = cur.getLong( 0 );
 		String mood = cur.getString( 1 );
 		String message = cur.getString( 2 );
+        Log.d("DB.CURSORTOENTRY", "mood:"+mood);
 		return MoodEntry.create(mood, dt, message);    	
     }
+
+    public List<MoodEntry> getAll() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cur = db.rawQuery("select tstamp, mood, message from entry order by tstamp desc", null);
+        List<MoodEntry> res = new LinkedList<MoodEntry>();
+        if (cur.moveToFirst()) {
+            do {
+                MoodEntry e = cursorToEntry(cur);
+                if (e.mood !=null ) res.add(e);
+            } while( cur.moveToNext() );
+        }
+        return res;
+    }
+
+    public boolean removeEntry(Long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        assert db != null;
+        final int removed = db.delete("entry", "_id=?", new String[]{ String.valueOf(id) });
+        Log.d("DB.REMOVE", "removed:" + removed);
+        return true;
+    }
+
 }

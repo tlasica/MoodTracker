@@ -4,15 +4,17 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.*;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class HistoryActivity extends Activity {
 
 	HistoryListAdapter		mAdapter;
 	Cursor					mCursor;
-	
+    int                     selectedItem = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,8 +30,31 @@ public class HistoryActivity extends Activity {
 		
 		mAdapter = new HistoryListAdapter(this, R.layout.history_list_item, mCursor, fromColumns, toViews, 0);
 		mAdapter.setTimeStampFormatter( TimeStampFormatter.create( getApplicationContext() ));
-		listview.setAdapter( mAdapter );		
-	}
+		listview.setAdapter( mAdapter );
+
+        // set action bar to show-up
+        listview.setOnItemClickListener( onListItemClickListener() );
+        this.registerForContextMenu( listview );
+    }
+
+    private AdapterView.OnItemClickListener onListItemClickListener() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = position;
+                view.showContextMenu();
+            }
+        };
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        Log.d("MAIN", "onCreateContextMenu()");
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.history_item_selected, menu);
+    }
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,4 +86,25 @@ public class HistoryActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+    public void onMenuRemoveItem(MenuItem item) {
+        Log.d("REMOVE", "selected:" + selectedItem);
+        if (selectedItem >= 0) {
+            Long id = mAdapter.getItemId( selectedItem );
+            Log.d("REMOVE", "id:" + id);
+            // remove from database
+            try {
+                DatabaseHelper db = DatabaseHelper.getInstance(this.getApplicationContext());
+                db.removeEntry( id );
+                // update content
+                mAdapter.changeCursor( db.fetchAllEntries() );
+//                mAdapter.notifyDataSetChanged();
+                // clear selection
+                selectedItem = -1;
+            }
+            catch (Exception e) {
+                Log.e("REMOVE", e.getMessage());
+
+            }
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -72,6 +73,9 @@ public class MainActivity extends Activity {
 			case R.id.menu_stats:
 				showStatisticsActivity();
 				return true;
+            case R.id.menu_history_chart:
+                showHistoryChartActivity();
+                return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -108,6 +112,15 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		startActivity(intent);
 	}
+
+    public void showHistoryChartActivity() {
+        HistoryChartGraph graph = new HistoryChartGraph();
+        Intent intent = graph.getBarChartPerDayIntent(this);
+        if (intent != null) {
+            startActivity(intent);
+        }
+        else Toast.makeText(this, "No history. Cannot show chart :-(", Toast.LENGTH_LONG);
+    }
 
 	private void updateLastView(MoodEntry entry) {
 		String dtStr = dtFormat.format( entry.tstamp );
