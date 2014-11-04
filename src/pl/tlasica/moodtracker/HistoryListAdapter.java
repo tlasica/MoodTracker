@@ -5,9 +5,9 @@ import java.util.Date;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class HistoryListAdapter extends SimpleCursorAdapter {
@@ -28,8 +28,9 @@ public class HistoryListAdapter extends SimpleCursorAdapter {
 	   //get reference to the row
 	   final View row = super.getView(position, convertView, parent);
 	   // get data
-	   mCursor.moveToPosition(position);
-	   String moodStr = mCursor.getString( mCursor.getColumnIndex(Database.Entry.COLUMN_NAME_MOOD));
+       Cursor c = this.getCursor();
+       c.moveToPosition(position);
+	   String moodStr = c.getString( c.getColumnIndex(Database.Entry.COLUMN_NAME_MOOD));
 	   Mood mood = Mood.fromString( moodStr );
 	   int rgb = Color.parseColor( mood.colorRGB() );
 	   

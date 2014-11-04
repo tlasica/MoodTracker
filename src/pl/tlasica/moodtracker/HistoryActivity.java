@@ -3,7 +3,6 @@ package pl.tlasica.moodtracker;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
@@ -68,7 +67,8 @@ public class HistoryActivity extends Activity {
 		super.onDestroy();
 		mCursor.close();
 	}
-	
+
+    /*
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -85,6 +85,7 @@ public class HistoryActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	*/
 
     public void onMenuRemoveItem(MenuItem item) {
         Log.d("REMOVE", "selected:" + selectedItem);

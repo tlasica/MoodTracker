@@ -11,7 +11,6 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
@@ -113,6 +112,7 @@ public class StatisticsActivity extends Activity {
 		return true;
 	}
 
+    /*
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -129,6 +129,7 @@ public class StatisticsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	*/
 
 	private void setupRenderer()
 	{

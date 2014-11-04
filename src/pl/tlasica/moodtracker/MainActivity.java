@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 public class MainActivity extends Activity {
@@ -18,6 +20,7 @@ public class MainActivity extends Activity {
 	TextView			lastRecordedMessage;
 	DatabaseHelper		dbHelper;
 	TimeStampFormatter	dtFormat;
+    private AdView      adView;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +30,39 @@ public class MainActivity extends Activity {
 		initializeLayoutAttributes();	
 		dbHelper = DatabaseHelper.getInstance(getApplicationContext());
 		dtFormat = TimeStampFormatter.create( getApplicationContext() );
-		
+
+        configureGooleAds();
 		//for testing only
 		//TestHelper.forTestCreateHistoryOfMood(dbHelper, 42);
 	}
 
-		
-	@Override
+    private void configureGooleAds() {
+        // configure google admob
+        adView = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("A9A32839D5C3A3E567C5D00C21437288")
+                .build();
+        adView.loadAd(adRequest);
+    }
+
+
+    @Override
 	protected void onDestroy() {
+        adView.destroy();
 		super.onDestroy();
 		dbHelper.close();
 	}
 
-	@Override
+    @Override
+    protected void onPause() {
+        adView.pause();
+        super.onPause();
+    }
+
+    @Override
 	protected void onResume() {
+        adView.resume();
 		super.onResume();
 		loadLastEntryAndUpdateView();		
 	}
