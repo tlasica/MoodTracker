@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,23 @@ public class MainActivity extends Activity {
 		initializeLayoutAttributes();	
 		dbHelper = DatabaseHelper.getInstance(getApplicationContext());
 		dtFormat = TimeStampFormatter.create( getApplicationContext() );
+
+        int LINK_TEXT_SIZE = 20;
+        int HEAD_TEXT_SIZE = 20;
+        int NORM_TEXT_SIZE = 28;
+        int SMALL_TEXT_SIZE = 34;
+
+        // links
+        setSmartSize((TextView)findViewById(R.id.link_history), LINK_TEXT_SIZE);
+        setSmartSize((TextView)findViewById(R.id.link_statistics), LINK_TEXT_SIZE);
+        setSmartSize((TextView)findViewById(R.id.link_calendar), LINK_TEXT_SIZE);
+        // labels
+        setSmartSize((TextView)findViewById(R.id.label_howdoyoufeel), HEAD_TEXT_SIZE);
+        setSmartSize((TextView)findViewById(R.id.label_click), SMALL_TEXT_SIZE);
+        // last status
+        setSmartSize((TextView)findViewById(R.id.last_update_label), HEAD_TEXT_SIZE);
+        setSmartSize((TextView)findViewById(R.id.last_status), NORM_TEXT_SIZE);
+        setSmartSize((TextView)findViewById(R.id.last_message), SMALL_TEXT_SIZE);
 
         configureGooleAds();
 		//for testing only
@@ -79,30 +97,6 @@ public class MainActivity extends Activity {
 		}		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch( item.getItemId() ) {
-			case R.id.menu_history:
-				showHistoryActivity();
-				return true;
-			case R.id.menu_stats:
-				showStatisticsActivity();
-				return true;
-            case R.id.menu_history_chart:
-                showHistoryChartActivity();
-                return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-	
 	public void recordHappy(View view) {
 		recordMood(view, Mood.HAPPY);
 	}
@@ -125,23 +119,23 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
-	public void showHistoryActivity() {
+	public void showHistory(View view) {
 		Intent intent = new Intent(this, HistoryActivity.class);
 		startActivity(intent);
 	}
 	
-	public void showStatisticsActivity() {
+	public void showStatistics(View view) {
 		Intent intent = new Intent(this, StatisticsActivity.class);
 		startActivity(intent);
 	}
 
-    public void showHistoryChartActivity() {
+    public void showCalendar(View view) {
         HistoryChartGraph graph = new HistoryChartGraph();
         Intent intent = graph.getBarChartPerDayIntent(this);
         if (intent != null) {
             startActivity(intent);
         }
-        else Toast.makeText(this, "No history. Cannot show chart :-(", Toast.LENGTH_LONG);
+        else Toast.makeText(this, getString(R.string.message_no_history_no_chart), Toast.LENGTH_LONG).show();
     }
 
 	private void updateLastView(MoodEntry entry) {
@@ -157,5 +151,13 @@ public class MainActivity extends Activity {
 		lastRecordedMood.setTextColor(color);
 		lastRecordedMood.invalidate();
 	}
-	
+
+    private void setSmartSize(TextView view, int numCharsPerRow) {
+        DisplayMetrics dMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
+        // lets try to get them back a font size realtive to the pixel width of the screen
+        final float WIDE = getResources().getDisplayMetrics().widthPixels;
+        float valueWide = (int)(WIDE / (float)numCharsPerRow / (dMetrics.scaledDensity));
+        view.setTextSize(valueWide);
+    }
 }

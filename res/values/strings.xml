@@ -5,13 +5,13 @@
     <string name="menu_stats">Statistics chart...</string>
     <string name="menu_history">History list...</string>
     <string name="menu_history_chart">History chart...</string>
-    <string name="what_is_your_mood">Choose emoticon to record your mood:</string>
+    <string name="what_is_your_mood">How do you feel?</string>
     <string name="edit_message_hint">Add some description here</string>
     <string name="button_happy_descr">happy face</string>
     <string name="button_sad_descr">sad face</string>
     <string name="button_angry_descr">angry face</string>
     <string name="button_neutral_descr">sad face</string>
-    <string name="last_update_label">Last recorded mood:</string>
+    <string name="last_update_label">Recent mood:</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_confirm_save">Record mood</string>
     <string name="button_stats_descr">Statistics</string>
@@ -22,5 +22,11 @@
     <string name="title_activity_statistics">Statistics Chart</string>
     <string name="title_activity_history_chart">History Chart</string>
     <string name="stats_welcome">Select how many weeks should be included</string>
+    <string name="click_to_record">click emoticon to record your mood</string>
+    <string name="link_history"><u>History</u></string>
+    <string name="link_statistics"><u>Statistics</u></string>
+    <string name="link_calendar"><u>Calendar</u></string>
+    <string name="facebook">facebook</string>
+    <string name="message_no_history_no_chart">No history. Cannot show chart :-(</string>
 
 </resources>
