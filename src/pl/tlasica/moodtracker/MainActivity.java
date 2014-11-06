@@ -34,20 +34,21 @@ public class MainActivity extends Activity {
 
         int LINK_TEXT_SIZE = 20;
         int HEAD_TEXT_SIZE = 20;
-        int NORM_TEXT_SIZE = 28;
-        int SMALL_TEXT_SIZE = 34;
+        int NORM_TEXT_SIZE = 20;
+        int SMALL_TEXT_SIZE = 28;
 
+        SmartTextSizer sizer = new SmartTextSizer(this);
         // links
-        setSmartSize((TextView)findViewById(R.id.link_history), LINK_TEXT_SIZE);
-        setSmartSize((TextView)findViewById(R.id.link_statistics), LINK_TEXT_SIZE);
-        setSmartSize((TextView)findViewById(R.id.link_calendar), LINK_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.link_history), LINK_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.link_statistics), LINK_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.link_calendar), LINK_TEXT_SIZE);
         // labels
-        setSmartSize((TextView)findViewById(R.id.label_howdoyoufeel), HEAD_TEXT_SIZE);
-        setSmartSize((TextView)findViewById(R.id.label_click), SMALL_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.label_howdoyoufeel), HEAD_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.label_click), SMALL_TEXT_SIZE);
         // last status
-        setSmartSize((TextView)findViewById(R.id.last_update_label), HEAD_TEXT_SIZE);
-        setSmartSize((TextView)findViewById(R.id.last_status), NORM_TEXT_SIZE);
-        setSmartSize((TextView)findViewById(R.id.last_message), SMALL_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.last_update_label), HEAD_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.last_status), NORM_TEXT_SIZE);
+        sizer.setTextSize((TextView)findViewById(R.id.last_message), SMALL_TEXT_SIZE);
 
         configureGooleAds();
 		//for testing only
@@ -152,12 +153,4 @@ public class MainActivity extends Activity {
 		lastRecordedMood.invalidate();
 	}
 
-    private void setSmartSize(TextView view, int numCharsPerRow) {
-        DisplayMetrics dMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
-        // lets try to get them back a font size realtive to the pixel width of the screen
-        final float WIDE = getResources().getDisplayMetrics().widthPixels;
-        float valueWide = (int)(WIDE / (float)numCharsPerRow / (dMetrics.scaledDensity));
-        view.setTextSize(valueWide);
-    }
 }

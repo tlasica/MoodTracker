@@ -26,16 +26,18 @@ public class HistoryActivity extends Activity {
 				
 		DatabaseHelper db = DatabaseHelper.getInstance( this.getApplicationContext() );		
 		mCursor = db.fetchAllEntries();
-		
-		mAdapter = new HistoryListAdapter(this, R.layout.history_list_item, mCursor, fromColumns, toViews, 0);
+
+        SmartTextSizer textSizer = new SmartTextSizer(this);
+		mAdapter = new HistoryListAdapter(textSizer, this, R.layout.history_list_item, mCursor, fromColumns, toViews, 0);
 		mAdapter.setTimeStampFormatter( TimeStampFormatter.create( getApplicationContext() ));
 		listview.setAdapter( mAdapter );
 
         // set action bar to show-up
-        listview.setOnItemClickListener( onListItemClickListener() );
-        this.registerForContextMenu( listview );
+        //listview.setOnItemClickListener( onListItemClickListener() );
+        //this.registerForContextMenu( listview );
     }
 
+    /*
     private AdapterView.OnItemClickListener onListItemClickListener() {
         return new AdapterView.OnItemClickListener() {
             @Override
@@ -45,7 +47,9 @@ public class HistoryActivity extends Activity {
             }
         };
     }
+    */
 
+    /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         Log.d("MAIN", "onCreateContextMenu()");
@@ -53,7 +57,7 @@ public class HistoryActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.history_item_selected, menu);
     }
-
+    */
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
