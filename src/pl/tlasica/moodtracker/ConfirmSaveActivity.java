@@ -19,13 +19,20 @@ public class ConfirmSaveActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_confirm_save);
+
+        // set text sizes
+        SmartTextSizer sizer = new SmartTextSizer(this);
+        sizer.setTextSize((TextView)findViewById(R.id.confirm_save_mood), 12);
+        sizer.setTextSize((TextView)findViewById(R.id.label_suggest_description), 24);
+
 		// get mood from intent
 		Intent intent = getIntent();
 		String moodToSaveStr = intent.getStringExtra(PARAM_MOOD_STR);
 		moodToSave = Mood.fromString(moodToSaveStr);
 		// update text with mood to save and change color
 		TextView textViewMood = (TextView) findViewById(R.id.confirm_save_mood);
-		textViewMood.setText(moodToSave.toString());
+        String str = "I feel " + moodToSave.toString();
+		textViewMood.setText(str);
 		int color = Color.parseColor( moodToSave.colorRGB() );
 		textViewMood.setTextColor(color);
 		textViewMood.invalidate();

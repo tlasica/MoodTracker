@@ -33,9 +33,9 @@ public class MainActivity extends Activity {
 		dtFormat = TimeStampFormatter.create( getApplicationContext() );
 
         int LINK_TEXT_SIZE = 20;
-        int HEAD_TEXT_SIZE = 20;
+        int HEAD_TEXT_SIZE = 16;
         int NORM_TEXT_SIZE = 20;
-        int SMALL_TEXT_SIZE = 28;
+        int SMALL_TEXT_SIZE = 24;
 
         SmartTextSizer sizer = new SmartTextSizer(this);
         // links

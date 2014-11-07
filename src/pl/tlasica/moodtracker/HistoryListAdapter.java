@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,11 +47,11 @@ public class HistoryListAdapter extends SimpleCursorAdapter {
 
 	    TextView tv = (TextView) row.findViewById( R.id.listitem_tstamp );
 	    tv.setTextColor( rgb );
-        textSizer.setTextSize(tv, 24);
+        textSizer.setTextSize(tv, 20);
 
 	    tv = (TextView) row.findViewById( R.id.listitem_mood );
 	    tv.setTextColor( rgb );
-        textSizer.setTextSize(tv, 24);
+        textSizer.setTextSize(tv, 20);
 
         ImageView image = (ImageView) row.findViewById(R.id.listitem_face);
         if (image != null) {
@@ -64,16 +66,13 @@ public class HistoryListAdapter extends SimpleCursorAdapter {
                 public void onClick(View v) {
 
                     AlertDialog.Builder bld = new AlertDialog.Builder(mContext);
-                    bld.setTitle("Your Title");
+                    bld.setTitle("Confirmation");
                     bld.setMessage("Please confirm removal")
                             .setCancelable(true)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    Toast.makeText(mContext, String.valueOf(entryId), Toast.LENGTH_LONG).show();
-                                    // if this button is clicked, close
-                                    // current activity
-                                    //MainActivity.this.finish();
+                                    removeEntryById(entryId);
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -102,4 +101,16 @@ public class HistoryListAdapter extends SimpleCursorAdapter {
 		super.setViewText(v, newText);
 	}
 
+
+    public void removeEntryById(Long id) {
+        Log.d("REMOVE", "id:" + id);
+        try {
+            DatabaseHelper db = DatabaseHelper.getInstance(mContext.getApplicationContext());
+            db.removeEntry( id );
+            this.changeCursor(db.fetchAllEntries());
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Something went wrong...", Toast.LENGTH_SHORT).show();
+            Log.e("REMOVE", e.getMessage());
+        }
+    }
 }
