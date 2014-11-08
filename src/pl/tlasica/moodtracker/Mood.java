@@ -5,10 +5,10 @@ package pl.tlasica.moodtracker;
 //http://stackoverflow.com/questions/3668958/how-to-set-color-for-the-textview-in-android
 public enum Mood {
 
-	HAPPY("HAPPY", "#FFB32A", R.drawable.face_happy),
-	NEUTRAL("NEUTRAL", "#43CF30", R.drawable.face_neutral),
-	SAD("SAD", "#35A4FF", R.drawable.face_sad),
-	ANGRY("ANGRY", "#E43DC0", R.drawable.face_angry);
+	HAPPY("HAPPY", "#FFB32A", R.drawable.face_happy, "face_happy.png"),
+	NEUTRAL("NEUTRAL", "#43CF30", R.drawable.face_neutral, "face_neutral.png"),
+	SAD("SAD", "#35A4FF", R.drawable.face_sad, "face_sad.png"),
+	ANGRY("ANGRY", "#E43DC0", R.drawable.face_angry, "face_angry.png");
 		
 	public String toString() {
 		return text;
@@ -29,15 +29,19 @@ public enum Mood {
 
     public int getImage() { return image; }
 
-	private Mood(String text, String rgb, int img) {
+    public String getImageFile() { return imageFile; }
+
+	private Mood(String text, String rgb, int img, String imgFile) {
 		this.text = text;
 		this.color = rgb;
         this.image = img;
+        this.imageFile = imgFile;
 
 	}
 
 	private String  text;
 	private String  color;
     private int     image;
+    private String  imageFile;
 	
 }

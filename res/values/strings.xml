@@ -17,7 +17,7 @@
     <string name="button_stats_descr">Statistics</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Yes, save my mood!</string>
-    <string name="confirm_save_text">It is not mandatory, but what about adding some description (e.g. reason or details)?</string>
+    <string name="confirm_save_text">You can add some description (e.g. reason or details) below.</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_statistics">Statistics Chart</string>
     <string name="title_activity_history_chart">History Chart</string>
@@ -28,5 +28,14 @@
     <string name="link_calendar"><u>Calendar</u></string>
     <string name="facebook">facebook</string>
     <string name="message_no_history_no_chart">No history. Cannot show chart :-(</string>
+    <string name="apprater_title">Rate Mood Tracker</string>
+    <string name="apprater_msg">Could you please rate Mood Tracker in Google Play? Thank you for any feedback or suggestions. It will help me to improve this application. </string>
+    <string name="apprater_button_ok">Ok</string>
+    <string name="apprater_button_later">Maybe later</string>
+    <string name="apprater_button_no">No, thanks</string>
+
+    <!-- FACEBOOK APP ID Mood Tracker-->
+    <string name="fb_app_id">966695743344024"</string>
+    <string name="no_network_connection">Sorry, no network connection</string>
 
 </resources>

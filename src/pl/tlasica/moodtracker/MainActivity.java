@@ -1,16 +1,23 @@
 package pl.tlasica.moodtracker;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.facebook.*;
+import com.facebook.widget.FacebookDialog;
+import com.facebook.widget.WebDialog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -21,8 +28,12 @@ public class MainActivity extends Activity {
 	TextView			lastRecordedMessage;
 	DatabaseHelper		dbHelper;
 	TimeStampFormatter	dtFormat;
-    private AdView      adView;
-		
+    AdView              adView;
+    UiLifecycleHelper   uiHelper;
+    BroadcastReceiver   mConnReceiver = null;
+    boolean             isInternetConnected = false;
+    MoodEntry           lastEntry = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +62,12 @@ public class MainActivity extends Activity {
         sizer.setTextSize((TextView)findViewById(R.id.last_message), SMALL_TEXT_SIZE);
 
         configureGooleAds();
+
+        uiHelper = new UiLifecycleHelper(this, null);
+        uiHelper.onCreate(savedInstanceState);
+
+        new AppRater(this).onAppStart();
+
 		//for testing only
 		//TestHelper.forTestCreateHistoryOfMood(dbHelper, 42);
 	}
@@ -65,27 +82,52 @@ public class MainActivity extends Activity {
         adView.loadAd(adRequest);
     }
 
-
     @Override
 	protected void onDestroy() {
         adView.destroy();
 		super.onDestroy();
 		dbHelper.close();
+        uiHelper.onDestroy();
 	}
 
     @Override
     protected void onPause() {
         adView.pause();
         super.onPause();
+        uiHelper.onPause();
+        if (mConnReceiver != null) {
+            this.unregisterReceiver(mConnReceiver);
+            mConnReceiver = null;
+        }
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override
 	protected void onResume() {
         adView.resume();
 		super.onResume();
-		loadLastEntryAndUpdateView();		
+        uiHelper.onResume();
+		loadLastEntryAndUpdateView();
+        // register to see connectivity changes
+        if (mConnReceiver == null) {
+            mConnReceiver = createBroadcastReceiver();
+            registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
 	}
-	
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        uiHelper.onSaveInstanceState(outState);
+    }
+
+    private ImageButton getShareOnFacebookButton() {
+        return (ImageButton) findViewById(R.id.shareOnFacebookButton);
+    }
+
 	private void initializeLayoutAttributes() {
 		lastRecordedMood = (TextView) findViewById(R.id.last_status);
 		lastRecordedMessage = (TextView) findViewById(R.id.last_message);
@@ -95,7 +137,9 @@ public class MainActivity extends Activity {
 		MoodEntry entry = dbHelper.getLastEntry();
 		if (entry != null) {
 			updateLastView( entry );
-		}		
+            lastEntry = entry;
+		}
+        updateFacebookButtonVisibility();
 	}
 
 	public void recordHappy(View view) {
@@ -146,11 +190,114 @@ public class MainActivity extends Activity {
 		lastRecordedMessage.setText( (entry.message!=null) ? entry.message : "" );
 		changeLastStatusColors(entry.mood);
 	}
-	
+
 	private void changeLastStatusColors(Mood mood) {
 		int color = Color.parseColor( mood.colorRGB() );
 		lastRecordedMood.setTextColor(color);
 		lastRecordedMood.invalidate();
 	}
+
+    private BroadcastReceiver createBroadcastReceiver() {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = connManager.getActiveNetworkInfo();
+                if (netInfo!=null && netInfo.isConnected()) {
+                    Log.d("NETWORK", "network is connected");
+                    isInternetConnected = true;
+                    // show facebook share button
+                    //getShareOnFacebookButton().setVisibility(View.VISIBLE);
+                }
+                else {
+                    Log.d("NETWORK", "network is disconnected");
+                    isInternetConnected = false;
+                    //getShareOnFacebookButton().setVisibility(View.GONE);
+                }
+            }
+        };
+    }
+
+    private void  updateFacebookButtonVisibility() {
+        if (lastEntry == null) getShareOnFacebookButton().setVisibility(View.INVISIBLE);
+        else getShareOnFacebookButton().setVisibility(View.VISIBLE);
+    }
+
+    public void shareOnFacebook(View view) {
+        if (isInternetConnected) {
+            if (Session.getActiveSession() != null && Session.getActiveSession().isOpened()) {
+                facebookShareWithFeedDialog();
+            }
+            else {
+                Session.openActiveSession(this, true, new Session.StatusCallback() {
+                    @Override
+                    public void call(Session session, SessionState state, Exception exception) {
+                        if (state == SessionState.OPENED) facebookShareWithFeedDialog();
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.no_network_connection), Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+
+    public void facebookShareWithFeedDialog() {
+        if (lastEntry == null) {
+            Log.e("OOOPS", "Fatal bug: lastEntry cannot be null when sharing via facebook!");
+            return;
+        }
+
+        Bundle params = new Bundle();
+        if (lastEntry.message != null)
+            params.putString("name", lastEntry.message);
+        else
+            params.putString("name", "I feel " + lastEntry.mood.toString() );
+        params.putString("link", "http://bit.ly/moodtracker");
+        params.putString("picture", pictureUrl(this.lastEntry.mood));
+        params.putString("description", "Recorded with Mood Tracker Android App on " + dtFormat.format( lastEntry.tstamp ));
+
+        WebDialog feedDialog = (
+                new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params))
+                .setOnCompleteListener(new WebDialog.OnCompleteListener() {
+
+                    @Override
+                    public void onComplete(Bundle values, FacebookException error) {
+                        if (error == null) {
+                            final String postId = values.getString("post_id");
+                            if (postId != null) Log.d("FACEBOOK", "posted");
+                        } else if (error instanceof FacebookOperationCanceledException) {
+                            Log.i("FACEBOOK", "Publish cancelled");
+                        } else {
+                            Log.w("FACEBOOK", "Error posting story");
+                        }
+                    }
+
+                })
+                .build();
+        feedDialog.show();
+    }
+
+    private String pictureUrl(Mood mood) {
+        String baseUrl = "https://raw.githubusercontent.com/tlasica/MoodTracker/master/res/drawable-hdpi/";
+        return baseUrl + mood.getImageFile();
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+        uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+            @Override
+            public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+                Log.e("FB Activity", String.format("Error: %s", error.toString()));
+            }
+
+            @Override
+            public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+                Log.i("FB Activity", "Success!");
+            }
+        });
+    }//onActivityResult
 
 }
