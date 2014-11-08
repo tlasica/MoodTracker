@@ -271,8 +271,8 @@ public class MainActivity extends Activity {
             params.putString("name", "I feel " + lastEntry.mood.toString() );
         params.putString("link", "http://bit.ly/moodtracker");
         params.putString("picture", pictureUrl(this.lastEntry.mood));
-        params.putString("description", "Recorded with Mood Tracker Android App on " + dtFormat.format( lastEntry.tstamp ));
-        params.putString("caption", "bit.ly/moodtracker");
+        params.putString("description", "Recorded on " + dtFormat.format( lastEntry.tstamp ));
+        params.putString("caption", "Mood Tracker at Google Play");
 
         WebDialog feedDialog = (
                 new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params))
