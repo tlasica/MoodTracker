@@ -224,38 +224,55 @@ public class MainActivity extends Activity {
     }
 
     public void shareOnFacebook(View view) {
+        if (lastEntry == null) {
+            Log.e("OOOPS", "Fatal bug: lastEntry cannot be null when sharing via facebook!");
+            return;
+        }
         if (isInternetConnected) {
-            if (Session.getActiveSession() != null && Session.getActiveSession().isOpened()) {
-                facebookShareWithFeedDialog();
-            }
-            else {
-                Session.openActiveSession(this, true, new Session.StatusCallback() {
-                    @Override
-                    public void call(Session session, SessionState state, Exception exception) {
-                        if (state == SessionState.OPENED) facebookShareWithFeedDialog();
-                    }
-                });
+            if (FacebookDialog.canPresentShareDialog(getApplicationContext(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+                facebookShareWithShareDialog();
+            } else {
+                if (Session.getActiveSession() != null && Session.getActiveSession().isOpened()) {
+                    facebookShareWithFeedDialog();
+                } else {
+                    Session.openActiveSession(this, true, new Session.StatusCallback() {
+                        @Override
+                        public void call(Session session, SessionState state, Exception exception) {
+                            if (state == SessionState.OPENED) facebookShareWithFeedDialog();
+                        }
+                    });
+                }
             }
         } else {
             Toast.makeText(this, getString(R.string.no_network_connection), Toast.LENGTH_SHORT ).show();
         }
     }
 
+    private void facebookShareWithShareDialog() {
+        Log.d("FACEBOOK", "Using ShareDialog");
+        // Publish the post using the Share Dialog
+        FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
+                .setLink("http://bit.ly/moodtracker")
+                .setName("name")
+                .setCaption("caption")
+                .setDescription("description")
+                .setPicture(pictureUrl(lastEntry.mood))
+                .build();
+        uiHelper.trackPendingDialogCall(shareDialog.present());
+    }
 
-    public void facebookShareWithFeedDialog() {
-        if (lastEntry == null) {
-            Log.e("OOOPS", "Fatal bug: lastEntry cannot be null when sharing via facebook!");
-            return;
-        }
 
+    private void facebookShareWithFeedDialog() {
+        Log.d("FACEBOOK", "Using FeedDialog");
         Bundle params = new Bundle();
-        if (lastEntry.message != null)
+        if (lastEntry.message != null && !lastEntry.message.isEmpty())
             params.putString("name", lastEntry.message);
         else
             params.putString("name", "I feel " + lastEntry.mood.toString() );
         params.putString("link", "http://bit.ly/moodtracker");
         params.putString("picture", pictureUrl(this.lastEntry.mood));
         params.putString("description", "Recorded with Mood Tracker Android App on " + dtFormat.format( lastEntry.tstamp ));
+        params.putString("caption", "bit.ly/moodtracker");
 
         WebDialog feedDialog = (
                 new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params))
@@ -286,7 +303,7 @@ public class MainActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+
         uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
             @Override
             public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
